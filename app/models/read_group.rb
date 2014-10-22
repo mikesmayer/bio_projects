@@ -14,6 +14,8 @@ class ReadGroup < ActiveRecord::Base
   validates_presence_of :barcode
   validates_presence_of :sample
 
+  after_destroy :check_if_run_has_read_groups
+
   def association_meta_data
     ReadGroup.reflect_on_all_associations(:has_many).map do |reflection|
       {
@@ -21,6 +23,12 @@ class ReadGroup < ActiveRecord::Base
         count: self.send(reflection.plural_name).size,
         button_text: "Delete #{reflection.plural_name.gsub('_', ' ').split.map(&:capitalize).join(' ')}"
       }
+    end
+  end
+
+  def check_if_run_has_read_groups
+    if run.read_groups.count == 1
+      run.destroy
     end
   end
 end

@@ -13,8 +13,24 @@ SeqResults.ReadGroupController = Ember.ObjectController.extend({
     },
     delete: function(){
       if (window.confirm("Are you sure you want to delete this read group?")){
-        this.get('model').deleteRecord();
-        this.get('model').save();
+        var self = this;
+
+        var readGroupCount = 0;
+        self.get('model').get('run').then(function(run) {
+          run.get('readGroups').then(function(readGroups){
+            readGroupCount = readGroups.content.length;
+          }).then(function(){
+            self.get('model').deleteRecord();
+            self.get('model').save();
+
+            if(readGroupCount == 1){
+              self.transitionToRoute('projects');
+            }
+            else{
+              self.transitionToRoute('read_groups.index');
+            }
+          })
+        });
       }
     },
     deleteModels: function(){
@@ -40,3 +56,4 @@ SeqResults.ReadGroupController = Ember.ObjectController.extend({
     }
   }
 });
+
