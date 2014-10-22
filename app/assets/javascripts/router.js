@@ -1,7 +1,9 @@
 // For more information see: http://emberjs.com/guides/routing/
 
 SeqResults.Router.map(function() {
-  this.resource("projects", { path: '/' });
+  this.resource("projects", { path: '/' }, function() {
+    this.resource("project", { path: "/:project_id"})
+  });
 
   this.resource("runs", { path: 'runs/:project_id' }, function() {
     this.resource("run", { path: "runs/:run_id"})

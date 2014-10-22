@@ -14,7 +14,7 @@
 
         <tbody>
         {{#each}}
-          {{#link-to 'runs' id tagName="tr"}}
+          {{#link-to 'project' this tagName="tr"}}
             <td>{{id}}</td>
           {{/link-to}}
         {{/each}}
@@ -24,6 +24,7 @@
     </div>
 
     <div class="col-md-6">
+      {{outlet}}
     </div>
   </div>
 </div>
