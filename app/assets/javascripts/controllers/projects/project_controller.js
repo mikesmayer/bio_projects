@@ -1,23 +1,15 @@
 SeqResults.ProjectController = Ember.ObjectController.extend({
   actions: {
       save: function(){
-        var originalID = this.get('model').original_id;
-        var newID = this.get('model').id;
-
-        $.ajax({
-          url: '/projects/'+originalID,
-          type: 'PUT',
-          data: {'new_id': newID},
-          context: this,
-          success: function() {
-//            this.get('model').save();
-            this.transitionToRoute('project');
-          },
-          fail: function(){
-            alert("Something went wrong, contact the administrator");
-          }
-        });
-
+        this.get('model').save()
+      },
+      delete: function(){
+        var readGroupCount = this.get('model').get('readGroupCount');
+        if (window.confirm("Are you sure you want to delete this project with " + readGroupCount + " read groups?")){
+          this.get('model').deleteRecord();
+          this.get('model').save();
+          this.transitionToRoute('projects')
+        }
       }
     }
 });

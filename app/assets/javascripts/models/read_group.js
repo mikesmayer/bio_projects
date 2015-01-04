@@ -1,5 +1,6 @@
 SeqResults.ReadGroup = DS.Model.extend({
   run: DS.belongsTo('run', { async: true }),
+  project: DS.belongsTo('project', { async: true }),
 
   library: DS.attr('string'),
   barcode: DS.attr('string'),
@@ -26,7 +27,6 @@ SeqResults.ReadGroup = DS.Model.extend({
   pcr_volume_ul: DS.attr('number'),
   notebook_location: DS.attr('string'),
   pre_denaturation_buffer: DS.attr('string'),
-  project: DS.attr('string'),
 
   association_meta_data: DS.attr()
 });

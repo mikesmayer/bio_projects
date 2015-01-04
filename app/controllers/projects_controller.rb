@@ -2,27 +2,32 @@ class ProjectsController < ApplicationController
   respond_to :json
 
   def index
-    @projects = ReadGroup.select(:project).distinct.map{|read_group|
-      {id: read_group.project}
-    }
+    @projects = Project.all.sort_by(&:name)
 
     respond_with @projects
   end
 
   def show
-    project_hash = {project: {id: params[:id]}}
-    respond_with project_hash
+    render json: Project.find(params[:id])
   end
 
   def update
-    ReadGroup.where(project: project_params[:id]).each do |read_group|
-      read_group.update_attributes(project: project_params[:new_id])
-    end
+    project = Project.find(params[:id])
 
-    respond_with 200
+    ReadGroup.update_project_name(project.name, project_params[:name])
+    status = project.update_attributes(project_params) ? 200 : :unprocessable_entity
+    respond_with project, status: status
+  end
+
+  def destroy
+    ## this is faster deletion over safe deletion
+    @project = Project.find(params[:id])
+    @project.read_groups.each{|read_group| ReadGroup.destroy_all_associations(read_group.id)}
+
+    respond_with @project.destroy
   end
 
   def project_params
-    params.permit(:id, :new_id)
+    params.require(:project).permit(:name)
   end
 end

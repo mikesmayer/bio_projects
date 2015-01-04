@@ -8,8 +8,9 @@ class ReadGroupSerializer < ActiveModel::Serializer
              :pcr_yield_ng, :pcr_conc_nm, :pcr_volume_ul, :notebook_location,
              :pre_denaturation_buffer,
 
-             :project,
-             :association_meta_data
+             :project_name,
+             :association_meta_data,
 
-  has_one :run
+  has_one :run,
+  has_one :project
 end

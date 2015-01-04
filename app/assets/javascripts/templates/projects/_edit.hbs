@@ -2,8 +2,9 @@
   <label>Project</label>
   <div class="input-group">
     <span class="input-group-addon">Name</span>
-    {{input type="text" value=id class='form-control'}}
+    {{input type="text" value=name class='form-control'}}
   </div>
 
   <button class="btn btn-success edit-model" {{action 'save'}}>Done</button>
+  <button class="btn btn-danger" {{action 'delete'}}>Delete</button>
 </div>
