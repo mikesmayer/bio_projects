@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 20141022222758) do
     t.string  "library",                           null: false
     t.string  "barcode",                           null: false
     t.string  "sample",                            null: false
-    t.string  "project"
     t.date    "library_date"
     t.string  "library_prep_method"
     t.float   "input_ng"

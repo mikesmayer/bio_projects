@@ -14,7 +14,6 @@ class ProjectsController < ApplicationController
   def update
     project = Project.find(params[:id])
 
-    ReadGroup.update_project_name(project.name, project_params[:name])
     status = project.update_attributes(project_params) ? 200 : :unprocessable_entity
     respond_with project, status: status
   end

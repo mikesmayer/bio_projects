@@ -7,4 +7,19 @@
 
   <button class="btn btn-success edit-model" {{action 'save'}}>Done</button>
   <button class="btn btn-danger" {{action 'delete'}}>Delete</button>
+
+  <div class="panel panel-default mts">
+    <div class="panel-heading">
+      <h3 class="panel-title">Contact List</h3>
+    </div>
+    <div class="panel-body">
+      <ol>
+        {{#each contact_list}}
+          <li>
+            {{this}}
+          </li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
 </div>

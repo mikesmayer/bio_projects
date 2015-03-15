@@ -6,16 +6,21 @@ class CreateProject < ActiveRecord::Migration
       t.string :name, :null => false
     end
 
-    project_names = ReadGroup.pluck(:project).uniq
+    project_names = ReadGroup.pluck(:project).uniq.compact
 
-    project_names.each do |project_name|
-      project = Project.where(name: project_name).first_or_create
-      project.read_groups << ReadGroup.where("project = ?", project_name)
+    if project_names.length > 0
+      project_names.each do |project_name|
+        project = Project.where(name: project_name).first_or_create
+        project.read_groups << ReadGroup.where("project = ?", project_name)
+      end
     end
+
+    remove_column :read_groups, :project
   end
 
   def down
+    remove_column :read_groups, :project_id
     drop_table :projects
-    remove_column :read_groups, :project_id, :integer
+    add_column :read_groups, :project, :string
   end
 end

@@ -9,8 +9,8 @@ class ReadGroupSerializer < ActiveModel::Serializer
              :pre_denaturation_buffer,
 
              :project_name,
-             :association_meta_data,
+             :association_meta_data
 
-  has_one :run,
+  has_one :run
   has_one :project
 end
